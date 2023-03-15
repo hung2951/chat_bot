@@ -10,7 +10,10 @@
     width: 1200px;
     margin: 30px auto;
 }
-
+main h1{
+    text-align: center;
+    margin: 20px;
+}
 
 .footer{
     background-color: white;
@@ -44,13 +47,22 @@
     background: none;
     position: absolute;
     right: 20px;
-    top: 10px;
-    font-size: 20px;
+    top: 5px;
+    font-size: 30px;
     cursor: pointer;
     color: #42467f;
     transition: all ease 0.3s;
 }
 .footer form button:hover{
+    transform: rotate(45deg);
+    transition: all ease 0.3s;
+    color: red;
+}
+.activeSend{
+    position: absolute;
+    right: 20px;
+    top: 5px;
+    font-size: 30px;
     transform: rotate(45deg);
     transition: all ease 0.3s;
     color: red;
@@ -88,13 +100,22 @@
     justify-content: space-between;
     transition: all ease 0.4s;
 }
+.content-item span{
+    font-weight: bold;
+    font-size: 18px;
+}
+.content-item-question{
+    color: red;
+    font-weight: 100 !important;
+    font-size: 16px !important;
+}
 .content-item:hover{
     background-color: rgb(0, 51, 51);
     color:white;
     transition: all ease 0.4s;
 }
 .listen {
-    font-size: 30px;
+    font-size: 50px;
     cursor: pointer;
     width: 100px;
     text-align: right;

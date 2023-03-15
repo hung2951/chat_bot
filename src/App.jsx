@@ -37,7 +37,7 @@ const Dictaphone = () => {
       setId(content.data.session_id);
       setArrContent([
         ...arrContent,
-        { answer: content.data.answer, audioId: content.data.audio_id },
+        { answer: content.data.answer, audioId: content.data.audio_id,question:transcript },
       ]);
       setLoading(false);
       console.log(content.data.answer, "session_id:", content.data.session_id);
@@ -66,13 +66,14 @@ const Dictaphone = () => {
         </div>
       ) : (
         <main>
+          <h1>Misaplus giải đáp những thắc mắc của bạn</h1>
           <div className="content">
             <div className="question">
               {transcript && <p>Trả lời cho câu hỏi: {transcript}</p>}
             </div>
             {arrContent?.map((item, index) => (
               <div className="content-item" key={index + 1}>
-                <p>{item.answer}</p>
+                <p><span>Câu hỏi:</span> <span className="content-item-question">{item.question}</span><br /> <br /> <span>Trả lời:</span> {item.answer}</p>
                 <div className="listen" onClick={() => Listen(item.audioId)}>
                   <MdVolumeDown />
                 </div>
@@ -92,9 +93,16 @@ const Dictaphone = () => {
             onChange={onHandleValue}
             readOnly
           />
-          <button>
-            <BsFillSendFill />
-          </button>
+
+          {loading ? (
+            <div className="activeSend">
+              <BsFillSendFill />
+            </div>
+          ) : (
+            <button>
+              <BsFillSendFill />
+            </button>
+          )}
         </form>
         {/* <p>Microphone: {listening ? "on" : "off"}</p> */}
         <div className="btn-void">
