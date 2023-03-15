@@ -99,3 +99,13 @@
     width: 100px;
     text-align: right;
 }
+
+@media (max-width:420px) {
+    .content{
+        width: 360px;
+        margin: 30px auto;
+    }
+    .footer form{
+        width: 360px !important;
+    }
+}
