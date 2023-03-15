@@ -86,9 +86,12 @@
     margin: 20px;
     display: flex;
     justify-content: space-between;
+    transition: all ease 0.4s;
 }
 .content-item:hover{
-    background-color: rgba(0, 49, 49, 0.406);
+    background-color: rgb(0, 51, 51);
+    color:white;
+    transition: all ease 0.4s;
 }
 .listen {
     font-size: 30px;

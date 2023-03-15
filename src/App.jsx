@@ -14,6 +14,7 @@ const Dictaphone = () => {
   const [question, setQuestion] = useState("");
   const [id, setId] = useState("");
   const [arrContent, setArrContent] = useState([]);
+  const [loading,setLoading] = useState(false)
   const {
     transcript,
     listening,
@@ -24,6 +25,7 @@ const Dictaphone = () => {
     return <span>Trình duyệt không hỗ trợ nhận dạng giọng nói.</span>;
   }
   const onSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault();
     SpeechRecognition.stopListening();
     try {
@@ -36,10 +38,12 @@ const Dictaphone = () => {
         ...arrContent,
         { answer: content.data.answer, audioId: content.data.audio_id },
       ]);
+      setLoading(false)
       console.log(content.data.answer, "session_id:", content.data.session_id);
       console.log("content:", arrContent);
     } catch (error) {
-      alert(error, "Vui lòng gửi lại câu trả lời!");
+      alert(error, "Vui lòng gửi lại câu hỏi!");
+      setLoading(false);
     }
   };
   const onHandleValue = (e) => {
@@ -55,7 +59,7 @@ const Dictaphone = () => {
   return (
     <div className="container">
       {/* content */}
-      <main>
+      {loading == true?<div>loading...</div>:<main>
         <div className="content">
           <div className="question">
             {transcript && <p>Trả lời cho câu hỏi: {transcript}</p>}
@@ -67,7 +71,8 @@ const Dictaphone = () => {
             </div>
           ))}
         </div>
-      </main>
+      </main>}
+      
       {/* end content */}
       {/* action */}
       <div className="footer">
