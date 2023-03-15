@@ -8,13 +8,14 @@ import {
   BsStopCircleFill,
   BsFillSendFill,
 } from "react-icons/bs";
-import { MdCancel,MdVolumeDown } from "react-icons/md";
+import { MdCancel, MdVolumeDown } from "react-icons/md";
 import { config, Demo } from "./api";
+import ReactLoading from "react-loading";
 const Dictaphone = () => {
   const [question, setQuestion] = useState("");
   const [id, setId] = useState("");
   const [arrContent, setArrContent] = useState([]);
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const {
     transcript,
     listening,
@@ -25,7 +26,7 @@ const Dictaphone = () => {
     return <span>Trình duyệt không hỗ trợ nhận dạng giọng nói.</span>;
   }
   const onSubmit = async (e) => {
-    setLoading(true)
+    setLoading(true);
     e.preventDefault();
     SpeechRecognition.stopListening();
     try {
@@ -38,7 +39,7 @@ const Dictaphone = () => {
         ...arrContent,
         { answer: content.data.answer, audioId: content.data.audio_id },
       ]);
-      setLoading(false)
+      setLoading(false);
       console.log(content.data.answer, "session_id:", content.data.session_id);
       console.log("content:", arrContent);
     } catch (error) {
@@ -59,20 +60,28 @@ const Dictaphone = () => {
   return (
     <div className="container">
       {/* content */}
-      {loading == true?<div>loading...</div>:<main>
-        <div className="content">
-          <div className="question">
-            {transcript && <p>Trả lời cho câu hỏi: {transcript}</p>}
-          </div>
-          {arrContent?.map((item, index) => (
-            <div className="content-item" key={index + 1}>
-              <p>{item.answer}</p>
-              <div className="listen" onClick={() => Listen(item.audioId)}><MdVolumeDown/></div>
-            </div>
-          ))}
+      {loading == true ? (
+        <div className="loading">
+          <ReactLoading type={"spinningBubbles"} color="#004a4a" />
         </div>
-      </main>}
-      
+      ) : (
+        <main>
+          <div className="content">
+            <div className="question">
+              {transcript && <p>Trả lời cho câu hỏi: {transcript}</p>}
+            </div>
+            {arrContent?.map((item, index) => (
+              <div className="content-item" key={index + 1}>
+                <p>{item.answer}</p>
+                <div className="listen" onClick={() => Listen(item.audioId)}>
+                  <MdVolumeDown />
+                </div>
+              </div>
+            ))}
+          </div>
+        </main>
+      )}
+
       {/* end content */}
       {/* action */}
       <div className="footer">
@@ -80,7 +89,8 @@ const Dictaphone = () => {
           <input
             type="text"
             defaultValue={transcript}
-            onChange={onHandleValue} readOnly
+            onChange={onHandleValue}
+            readOnly
           />
           <button>
             <BsFillSendFill />
